@@ -19,7 +19,8 @@ It handles utm parameters:
 - roistat_pos
 - yclid
 
-##Usage
+## Usage
+
 Run snippet utmMark in form
 ```
 {$_modx->runSnippet('!utmMark')}
