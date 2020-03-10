@@ -35,7 +35,7 @@ switch ($modx->event->name) {
       if (strtolower(substr($domain, 0, 4)) == 'www.') $domain = substr($domain, 4);
       if (substr($domain, 0, 1) != '.' && $domain != "localhost") $domain = '.' . $domain;
 
-      setcookie($field, $cookie_field, time() + 60 * 60 * 24 * 30, '/', $domain);
+      setcookie($field, $cookie_field, time() + 60 * 60 * 24, '/', $domain);
 
       $_COOKIE[$field] = $cookie_field;
 
