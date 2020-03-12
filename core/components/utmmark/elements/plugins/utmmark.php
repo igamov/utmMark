@@ -35,6 +35,39 @@ switch ($modx->event->name) {
       if (strtolower(substr($domain, 0, 4)) == 'www.') $domain = substr($domain, 4);
       if (substr($domain, 0, 1) != '.' && $domain != "localhost") $domain = '.' . $domain;
 
+      #organic start
+    
+      if ($field == 'utm_source') {
+        $utm_source = $cookie_field;
+        if (empty($utm_source)) {
+          $original_ref = $_COOKIE['original_ref'];
+
+          switch ($original_ref) {
+            case 'https://www.google.ru/':
+              $cookie_field = 'google';
+              break;
+            case 'https://yandex.ru/':
+              $cookie_field = 'yandex';
+              break;
+          }
+        }
+      }
+
+      if ($field == 'utm_campaign') {
+        $utm_campaign = $cookie_field;
+        if (empty($utm_campaign)) {
+          $original_ref = $_COOKIE['original_ref'];
+
+          switch ($original_ref) {
+            case 'https://www.google.ru/':
+            case 'https://yandex.ru/':
+              $cookie_field = 'organic';
+              break;
+          }
+        }
+      }
+
+      #organic end
       setcookie($field, $cookie_field, time() + 60 * 60 * 24, '/', $domain);
 
       $_COOKIE[$field] = $cookie_field;
