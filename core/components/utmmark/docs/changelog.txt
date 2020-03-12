@@ -1,5 +1,9 @@
 Changelog for utmMark.
 
+1.0.2-beta
+==============
+- add organic traffic
+
 1.0.1-beta
 ==============
 - save to cookie on 24 hours
