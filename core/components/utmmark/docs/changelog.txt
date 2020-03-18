@@ -1,5 +1,9 @@
 Changelog for utmMark.
 
+1.0.3-beta
+==============
+- replace "{" "}" for Fenom
+
 1.0.2-beta
 ==============
 - add organic traffic

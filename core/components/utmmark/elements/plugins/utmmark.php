@@ -23,13 +23,16 @@ switch ($modx->event->name) {
     $cookie_field = '';
     foreach ($fields as $id => $field) {
       $field = trim($field);
-      if (isset($_GET[$field]) && $_GET[$field] != '')
-        $cookie_field = htmlspecialchars($_GET[$field], ENT_QUOTES, 'UTF-8');
+      if (isset($_GET[$field]) && $_GET[$field] != ''){
+        $cookie_field = str_replace("{","", htmlspecialchars($_GET[$field], ENT_QUOTES, 'UTF-8'));
+        $cookie_field = str_replace("}","", $cookie_field);
+      }
       elseif (isset($_COOKIE[$field]) && $_COOKIE[$field] != '') {
-        $cookie_field = $_COOKIE[$field];
+        $cookie_field = str_replace("{","", $_COOKIE[$field]);
+        $cookie_field = str_replace("}","", $cookie_field);
       } else {
         $cookie_field = '';
-      }
+      }s
 
       $domain = $_SERVER["SERVER_NAME"];
       if (strtolower(substr($domain, 0, 4)) == 'www.') $domain = substr($domain, 4);

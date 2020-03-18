@@ -11,21 +11,21 @@ if (!defined('MODX_CORE_PATH')) {
 return [
     'name' => 'utmMark',
     'name_lower' => 'utmmark',
-    'version' => '1.0.2',
+    'version' => '1.0.3',
     'release' => 'beta',
     // Install package to site right after build
     'install' => true,
     // Which elements should be updated on package upgrade
     'update' => [
-        'chunks' => true,
+        'chunks' => false,
         'menus' => false,
-        'permission' => true,
+        'permission' => false,
         'plugins' => true,
-        'policies' => true,
-        'policy_templates' => true,
+        'policies' => false,
+        'policy_templates' => false,
         'resources' => false,
-        'settings' => true,
-        'snippets' => true,
+        'settings' => false,
+        'snippets' => false,
         'templates' => false,
         'widgets' => false,
     ],
