@@ -32,7 +32,7 @@ switch ($modx->event->name) {
         $cookie_field = str_replace("}","", $cookie_field);
       } else {
         $cookie_field = '';
-      }s
+      }
 
       $domain = $_SERVER["SERVER_NAME"];
       if (strtolower(substr($domain, 0, 4)) == 'www.') $domain = substr($domain, 4);
