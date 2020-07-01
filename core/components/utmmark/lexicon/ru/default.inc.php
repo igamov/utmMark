@@ -1,6 +1,6 @@
 <?php
 include_once 'setting.inc.php';
-
+include_once 'properties.inc.php';
 // $_lang['utmmark'] = 'utmMark';
 // $_lang['utmmark_menu_desc'] = 'Пример расширения для разработки.';
 // $_lang['utmmark_intro_msg'] = 'Вы можете выделять сразу несколько предметов при помощи Shift или Ctrl.';

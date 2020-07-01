@@ -1,5 +1,11 @@
 Changelog for utmMark.
 
+1.0.4-beta
+==============
+- create package for modstore.pro
+- add en lexicon
+- add properties for snippets
+
 1.0.3-beta
 ==============
 - replace "{" "}" for Fenom

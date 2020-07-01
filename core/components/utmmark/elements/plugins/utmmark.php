@@ -1,5 +1,4 @@
 <?php
-
 /** @var modX $modx */
 switch ($modx->event->name) {
   case 'OnHandleRequest':
@@ -18,6 +17,9 @@ switch ($modx->event->name) {
 
     $_COOKIE['url'] =  (isset($_SERVER["HTTPS"]) ? 'https://' : 'http://') . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
     $utmmark_marks = $modx->getOption('utmmark_marks');
+    if(!$utmmark_marks){
+      return 'Could not UTM tags';
+    }
     $fields = explode(",", $utmmark_marks);
 
     $cookie_field = '';
@@ -71,6 +73,7 @@ switch ($modx->event->name) {
       }
 
       #organic end
+
       setcookie($field, $cookie_field, time() + 60 * 60 * 24, '/', $domain);
 
       $_COOKIE[$field] = $cookie_field;
