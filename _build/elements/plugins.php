@@ -6,6 +6,8 @@ return [
         'description' => '',
         'events' => [
             'OnHandleRequest' => [],
+            'msOnBeforeCreateOrder' => [],
+            'msOnManagerCustomCssJs' => [],
         ],
     ],
 ];
