@@ -1,4 +1,5 @@
 <?php
+
 /** @var modX $modx */
 switch ($modx->event->name) {
   case 'OnHandleRequest':
@@ -17,7 +18,7 @@ switch ($modx->event->name) {
 
     $_COOKIE['url'] =  (isset($_SERVER["HTTPS"]) ? 'https://' : 'http://') . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
     $utmmark_marks = $modx->getOption('utmmark_marks');
-    if(!$utmmark_marks){
+    if (!$utmmark_marks) {
       return 'Could not UTM tags';
     }
     $fields = explode(",", $utmmark_marks);
@@ -25,13 +26,12 @@ switch ($modx->event->name) {
     $cookie_field = '';
     foreach ($fields as $id => $field) {
       $field = trim($field);
-      if (isset($_GET[$field]) && $_GET[$field] != ''){
-        $cookie_field = str_replace("{","", htmlspecialchars($_GET[$field], ENT_QUOTES, 'UTF-8'));
-        $cookie_field = str_replace("}","", $cookie_field);
-      }
-      elseif (isset($_COOKIE[$field]) && $_COOKIE[$field] != '') {
-        $cookie_field = str_replace("{","", $_COOKIE[$field]);
-        $cookie_field = str_replace("}","", $cookie_field);
+      if (isset($_GET[$field]) && $_GET[$field] != '') {
+        $cookie_field = str_replace("{", "", htmlspecialchars($_GET[$field], ENT_QUOTES, 'UTF-8'));
+        $cookie_field = str_replace("}", "", $cookie_field);
+      } elseif (isset($_COOKIE[$field]) && $_COOKIE[$field] != '') {
+        $cookie_field = str_replace("{", "", $_COOKIE[$field]);
+        $cookie_field = str_replace("}", "", $cookie_field);
       } else {
         $cookie_field = '';
       }
@@ -41,7 +41,7 @@ switch ($modx->event->name) {
       if (substr($domain, 0, 1) != '.' && $domain != "localhost") $domain = '.' . $domain;
 
       #organic start
-    
+
       if ($field == 'utm_source') {
         $utm_source = $cookie_field;
         if (empty($utm_source)) {
@@ -84,5 +84,52 @@ switch ($modx->event->name) {
         $field => $_COOKIE[$field],
       ), 'ref.');
     }
+    break;
+  case 'msOnBeforeCreateOrder':
+    $utmmark_marks = $modx->getOption('utmmark_marks');
+    $address = $msOrder->getOne('Address');
+    $properties = array();
+
+    $fields = explode(",", $utmmark_marks);
+
+    if (!is_array($fields)) {
+      $modx->log(1, 'Error utmMark. Fields is not array');
+      return;
+    }
+
+    foreach ($fields as $field) {
+      $field = trim($field);
+      $value = $modx->getPlaceholder('ref.' . $field);
+      if($value){
+        $properties[$field] = htmlentities($value, ENT_COMPAT | ENT_HTML401, 'UTF-8');
+      }
+    };
+
+    if (count($properties) > 0) {
+      $address->set('properties', json_encode($properties));
+    }
+    break;
+  case 'msOnManagerCustomCssJs':
+    if ($page != 'orders') return;
+    $modx->controller->addHtml("
+      <script type='text/javascript'>
+        Ext.ComponentMgr.onAvailable('minishop2-window-order-update', function(){
+          if (miniShop2.config['order_address_fields'].in_array('properties')){
+            if (this.record.addr_properties){
+              var key;
+              for (key in this.record.addr_properties) {
+                this.fields.items[2].items.push({
+                  xtype: 'displayfield',
+                  name: 'addr_properties_'+key,
+                  fieldLabel: _('ms2_properties_'+key),
+                  anchor: '100%',
+                  style: 'border:1px solid #efefef;width:95%;padding:5px;',
+                  html: this.record.addr_properties[key]
+                });
+              }
+            }		
+          }
+        });                
+      </script>");
     break;
 }

@@ -23,7 +23,7 @@ if(!$utmmark_marks){
 $fields = explode(",", $utmmark_marks);
 
 if(!is_array($fields)){
-    $modx->log(1, 'Eror utmMark. Fields is not array');
+    $modx->log(1, 'Error utmMark. Fields is not array');
     return;
 }
 
