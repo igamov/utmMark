@@ -121,7 +121,7 @@ switch ($modx->event->name) {
                 this.fields.items[2].items.push({
                   xtype: 'displayfield',
                   name: 'addr_properties_'+key,
-                  fieldLabel: _('ms2_properties_'+key),
+                  fieldLabel: key,
                   anchor: '100%',
                   style: 'border:1px solid #efefef;width:95%;padding:5px;',
                   html: this.record.addr_properties[key]
